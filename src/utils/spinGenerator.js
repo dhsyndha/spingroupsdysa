@@ -9,33 +9,24 @@ export function shuffle(array) {
 
   return arr;
 }
-
 export function generateGroups(studentList, topicList, totalGroup) {
-
     if (totalGroup <= 0) {
     return [];
   }
-  
   const students = shuffle(studentList);
   const topics = shuffle(topicList);
-
   const result = [];
 
   for (let i = 0; i < totalGroup; i++) {
-
     result.push({
       id: i + 1,
       topic: topics[i % topics.length],
       members: [],
     });
-
   }
-
   students.forEach((student, index) => {
 
     result[index % totalGroup].members.push(student);
-
   });
-
   return result;
 }
