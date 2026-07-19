@@ -27,7 +27,7 @@ export default function Home() {
     .filter(Boolean).length;
 
 function handleSpin() {
-  const studentList = students
+    const totalGroups = Number(groups)
     .split("\n")
     .map((x) => x.trim())
     .filter(Boolean);
@@ -47,7 +47,7 @@ function handleSpin() {
     return;
   }
 
-  if (groups <= 0) {
+  if (!totalGroups || totalGroups <= 0) {
     toast.error("👥 Masukkan jumlah kelompok.");
     return;
   }
@@ -56,10 +56,10 @@ function handleSpin() {
 
   timeoutRef.current = setTimeout(() => {
     const data = generateGroups(
-      studentList,
-      topicList,
-      groups
-    );
+    studentList,
+    topicList,
+    totalGroups
+  );
 
     setResults(data);
     setLoading(false);
