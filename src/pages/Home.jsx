@@ -11,7 +11,7 @@ import { generateGroups } from "../utils/spinGenerator";
 export default function Home() {
   const [students, setStudents] = useState("");
   const [topics, setTopics] = useState("");
-  const [groups, setGroups] = useState(0);
+  const [groups, setGroups] = useState();
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const timeoutRef = useRef(null);
@@ -74,7 +74,7 @@ function handleCancelSpin() {
     setStudents("");
     setTopics("");
     setResults([]);
-    setGroups(0);
+    setGroups();
   }
 
   function exportResult() {
