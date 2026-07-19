@@ -7,7 +7,7 @@ export default function Header() {
       </div>
 
       <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-        SpinGroup Pro
+        Spin By dysa
       </h1>
 
       <p className="text-gray-600 mt-5 text-lg max-w-3xl mx-auto">
