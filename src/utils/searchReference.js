@@ -8,19 +8,24 @@ export function searchReference(topic) {
       url: `https://www.google.com/search?q=${query}`,
     },
     {
+      name: "Google Scholar",
+      icon: "📄",
+      url: `https://scholar.google.com/scholar?q=${query}`,
+    },
+    {
       name: "YouTube",
-      icon: "📺",
+      icon: "🎥",
       url: `https://www.youtube.com/results?search_query=${query}`,
     },
     {
-      name: "GitHub",
-      icon: "💻",
-      url: `https://github.com/search?q=${query}`,
+      name: "ChatGPT",
+      icon: "🤖",
+      url: `https://chatgpt.com/?q=${query}`,
     },
     {
-      name: "Wikipedia",
-      icon: "📚",
-      url: `https://en.wikipedia.org/wiki/Special:Search?search=${query}`,
+      name: "Perplexity",
+      icon: "🌐",
+      url: `https://www.perplexity.ai/search/new?q=${query}`,
     },
   ];
 }

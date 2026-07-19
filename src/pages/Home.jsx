@@ -7,6 +7,7 @@ import ResultCard from "../components/ResultCard";
 import SpinOverlay from "../components/SpinOverlay";
 import StatsCard from "../components/StatsCard";
 import { generateGroups } from "../utils/spinGenerator";
+import { publishResult } from "../service/resultService";
 
 export default function Home() {
   const [students, setStudents] = useState("");
@@ -27,7 +28,7 @@ export default function Home() {
     .filter(Boolean).length;
 
 function handleSpin() {
-    const totalGroups = Number(groups)
+  const studentList = students
     .split("\n")
     .map((x) => x.trim())
     .filter(Boolean);
@@ -36,6 +37,8 @@ function handleSpin() {
     .split("\n")
     .map((x) => x.trim())
     .filter(Boolean);
+
+  const totalGroups = Number(groups);
 
   if (studentList.length === 0) {
     toast.error("👥 Masukkan daftar peserta terlebih dahulu.");
@@ -56,16 +59,17 @@ function handleSpin() {
 
   timeoutRef.current = setTimeout(() => {
     const data = generateGroups(
-    studentList,
-    topicList,
-    totalGroups
-  );
+      studentList,
+      topicList,
+      totalGroups
+    );
 
     setResults(data);
     setLoading(false);
     toast.success("🎉 Kelompok berhasil dibuat!");
   }, 2500);
 }
+
 function handleCancelSpin() {
   clearTimeout(timeoutRef.current);
   setLoading(false);
@@ -74,7 +78,7 @@ function handleCancelSpin() {
     setStudents("");
     setTopics("");
     setResults([]);
-    setGroups();
+    setGroups("");
   }
 
   function exportResult() {
@@ -105,6 +109,28 @@ function handleCancelSpin() {
 
     URL.revokeObjectURL(url);
     }
+
+    async function handlePublish() {
+  if (results.length === 0) {
+    toast.error("Belum ada hasil yang bisa dipublish.");
+    return;
+  }
+
+  try {
+    const id = await publishResult(results);
+
+    const url = `https://spindysa.vercel.app/result/${id}`;
+
+    await navigator.clipboard.writeText(url);
+
+    toast.success("🌐 Link berhasil disalin!");
+
+    window.open(url, "_blank");
+  } catch (err) {
+    console.error(err);
+    toast.error("Gagal publish hasil.");
+  }
+}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 py-10 px-5">
@@ -159,6 +185,11 @@ function handleCancelSpin() {
         onClick={exportResult}
         className="bg-green-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-green-700 transition">
         📥 Export Hasil
+      </button>
+      <button
+        onClick={handlePublish}
+        className="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition">
+        🌐 Publish Result
       </button>
 
     </div>
