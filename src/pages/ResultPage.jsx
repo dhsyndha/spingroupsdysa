@@ -10,12 +10,15 @@ export default function ResultPage() {
 
   useEffect(() => {
     async function load() {
-      const snap = await getDoc(doc(db, "results", id));
+  const snap = await getDoc(doc(db, "results", id));
 
-      if (snap.exists()) {
-        setResults(snap.data().results);
-      }
-    }
+  console.log("Ada dokumen:", snap.exists());
+
+  if (snap.exists()) {
+    console.log("Data Firestore:", snap.data());
+    setResults(snap.data().results);
+  }
+}
 
     load();
   }, [id]);
